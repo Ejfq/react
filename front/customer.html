@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1> customer masage </h1>
+    <div id = "list">
+        <div><span id="id"></span><span id="name"></span></div>
+
+
+    </div>
+
+    <table id = 'table' border = 1px solid black>
+        <tr>
+            <th>ID</th>
+            <th>이름</th>
+            <th>이메일</th>
+        </tr>
+    </table>
+    <script>
+        fetch("http://localhost:3000/customer")
+        .then(result => result.json())
+        .then(result => {
+            for(let i = 0 ; i < result.length ; i++){
+
+                const newTag = `<div><span>${result[i].id}</span><span>${result[i].name}</span></div>`;
+                list.insertAdjacentHTML('beforeend', newTag)
+
+                const row = table.insertRow();
+
+                let fieldList = ['id','name','email']
+                for(field of fieldList){
+                    let td1 = row.insertCell();
+                    td1.innerText = result[i][field];
+                }
+
+
+
+                
+                
+            }
+        })
+    </script>
+</body>
+</html>
