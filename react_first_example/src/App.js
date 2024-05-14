@@ -1,10 +1,13 @@
-import FilterableProductTable from './product'
+import {useState} from 'react';
 function Header(props){
   console.log(props)
   return (
     <header>
     <h1>
-      <a href='/'>{props.title}</a>
+      <a href='/' onClick={(e)=>{
+            e.preventDefault();
+            props.onChangeMode()
+        }}>{props.title}</a>
     </h1>
   </header>)
 }
@@ -13,7 +16,11 @@ function Nav(props){
   const lis = [];
   for(let i = 0 ; i<props.topics.length; i++){
     let t = props.topics[i]
-    lis.push(<li key = {t.id}><a href={'/read/' +t.id}>{t.title}</a></li>)
+    lis.push(<li key = {t.id}><a href={'/read/' +t.id} id = {t.id} onClick={(e)=>{
+        e.preventDefault();
+        props.onChangeMode(e.target.id);
+        //console.log(e.target.id)
+    }}>{t.title}</a></li>)
   }
   return (
     <nav>
@@ -34,57 +41,42 @@ function Article(props){
   )
 }
 
-function Gallery(props){
-  //const images = [];
-  let images = props.images.map(img => 
-    <div className ="col-3 m-3" key ={img.description}>
-     <img src={img["image-src"]} style ={{width:300 , display:'inline'}} alt ={img.description}></img>
-   </div>
-  );
 
-  // for (let i = 0 ; i <props.images.length; i++){
-  //   const img = props.images[i];
-  //   images.push(<div className ="col-3 m-3" key ={img.description}>
-  //   <img src={img["image-src"]} style ={{width:300 , display:'inline'}} alt ={img.description}></img>
-  // </div>)
-  //}
-
-  return (
-    <div className="container">
-      <div className = "row">
-        {images}
-      </div>
-    </div>
-  )
-}
 
 
 function App() {
-  const girlImages = [
-  {
-    "description": "Redhead with frackles",
-    "image-src": "https://images.pexels.com/photos/3228213/pexels-photo-3228213.jpeg"
-  },
-  {
-    "description": "Girl in black dress",
-    "image-src": "https://images.pexels.com/photos/1385472/pexels-photo-1385472.jpeg"
-  },
-  {
-    "description": "Girl Sitting on Chair",
-    "image-src": "https://images.pexels.com/photos/4725133/pexels-photo-4725133.jpeg"
-  }
-]
+  let [mode, setMode] = useState('welcome');
   const topics = [
                   {id : 1 , title : 'html', body : 'html is...'},
                   {id : 2 , title : 'csss', body : 'css is...'}, 
                   {id : 3 ,title : 'javascript', body : 'javacript is...'} ];
+
+    let [id, setId] = useState(1);
+
+   let content = null;
+   if(mode ==="welcome"){
+        content = <Article title="Welcome" body="Hello,WEB </br> bye"/>
+   }else {
+        let title, body = null;
+        for(let i = 0 ; i < topics.length ; i++){
+            if(topics[i].id == id){
+                title = topics[i].title;
+                body = topics[i].body;
+            }
+        }
+        content = <Article title={title} body={body}/>
+   }
   return (
     <div className="App">
-      {/* <Header title="REACT" />
-      <Nav topics={topics}/>
-      <Article title="Welcome" body="Hello,WEB </br> bye"/>
-      <Gallery images={girlImages}/> */}
-      <FilterableProductTable />
+      <Header title="REACT" onChangeMode={()=>{
+        setMode('welcome');
+      }} />
+      <Nav topics={topics} onChangeMode={(id)=>{
+        setMode('read');
+
+        setId(id)
+      }}/>
+      {content}
     </div>
   );
 }
