@@ -5,7 +5,7 @@ const todoRoute = require("./routes/todo")
 const cors = require("cors");
 const morgan = require("morgan");
 const app = express();
-const port = 3000;
+const port = 8000;
 
 app.use(morgan("tiny"));
 app.use(cors());
