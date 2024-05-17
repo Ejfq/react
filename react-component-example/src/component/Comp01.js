@@ -1,5 +1,5 @@
 
-function Comp(){
+function Comp1(){
     const style = {color: "red" , fontWeight:"bold", backgroundColor : "yellow", fontSize : "30px"}
     const modalYn = true;
     const name = "홍길동";
@@ -22,4 +22,4 @@ function Comp(){
 )
 }
 
-export default Comp;
+export default Comp1;

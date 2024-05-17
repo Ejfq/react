@@ -1,3 +1,5 @@
+import Comp1 from "./component/Comp01"
+import Comp2 from "./component/Comp02"
 import Comp3 from "./component/Comp03"
 import Comp4 from "./component/Comp04"
 import Comp5 from "./component/Comp05";
@@ -42,9 +44,10 @@ function App() {
           <Card>
             <CardBody>
               <Routes>
-              {compList.map(c =>(
-                <Route path ={'/'+c} element={'<'+c+'/>'}></Route>
-           ))}
+                <Route path ='/Comp01' element={<Comp1></Comp1>}></Route>
+                <Route path ='/Comp02' element={<Comp2/>}></Route>
+                <Route path ='/Comp03' element={<Comp3/>}></Route>
+                <Route path ='/Comp04' element={<Comp4/>}></Route>
               </Routes>
             </CardBody>
           </Card>
